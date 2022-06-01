@@ -1,8 +1,7 @@
 import { __ } from 'i18n';
-import { api } from '@converse/headless/core.js';
 import { html } from "lit";
 import { modal_header_close_button } from "plugins/modal/templates/buttons.js"
-import { getServerList } from "../../plugins/rosterview/utils"
+import { getServerList } from "../../plugins/rosterview/utils.js"
 
 
 export default (el) => {
@@ -25,16 +24,16 @@ export default (el) => {
                         <span class="modal-alert"></span>
                         <div class="form-group add-xmpp-contact__jid">
                             <label class="clearfix" for="jid">${i18n_xmpp_address}:</label>
-                            <div class="suggestion-box suggestion-box__jid">
-                                <ul class="suggestion-box__results suggestion-box__results--below" hidden=""></ul>
-                                <converse-autocomplete name="jid" .getAutoCompleteList="${getServerList}"
-                                    placeholder="${i18n_contact_placeholder}"/>
-                                <span class="suggestion-box__additions visually-hidden" role="status" aria-live="assertive" aria-relevant="additions"></span>
-                            </div>
+                            <converse-autocomplete
+                                autofocus
+                                .getAutoCompleteList=${getServerList}
+                                placeholder="${i18n_contact_placeholder}"
+                                name="jid"></converse-autocomplete>
                         </div>
 
                         <div class="form-group add-xmpp-contact__name">
                             <label class="clearfix" for="name">${i18n_nickname}:</label>
+                            <!-- TODO: Add converse-autocomplete here as well -->
                             <div class="suggestion-box suggestion-box__name">
                                 <ul class="suggestion-box__results suggestion-box__results--above" hidden=""></ul>
                                 <input type="text" name="name" value="${el.model.get('nickname') || ''}"
@@ -45,7 +44,10 @@ export default (el) => {
 
                         <div class="form-group add-xmpp-contact__group">
                             <label class="clearfix" for="name">${i18n_group}:</label>
-                            <!--<converse-autocomplete .getAutoCompleteList="${() => el.getGroupsAutoCompleteList()}" name="group"/>-->
+                            <converse-autocomplete
+                                .getAutoCompleteList="${() => el.getGroupsAutoCompleteList()}"
+                                name="group">
+                            </converse-autocomplete>
                         </div>
 
                         <div class="form-group"><div class="invalid-feedback">${i18n_error_message}</div></div>
