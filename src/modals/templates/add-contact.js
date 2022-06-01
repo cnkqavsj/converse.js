@@ -2,6 +2,7 @@ import { __ } from 'i18n';
 import { api } from '@converse/headless/core.js';
 import { html } from "lit";
 import { modal_header_close_button } from "plugins/modal/templates/buttons.js"
+import { getServerList } from "../../plugins/rosterview/utils"
 
 
 export default (el) => {
@@ -26,9 +27,7 @@ export default (el) => {
                             <label class="clearfix" for="jid">${i18n_xmpp_address}:</label>
                             <div class="suggestion-box suggestion-box__jid">
                                 <ul class="suggestion-box__results suggestion-box__results--below" hidden=""></ul>
-                                <input type="text" name="jid" ?required=${(!api.settings.get('xhr_user_search_url'))}
-                                    value="${el.model.get('jid') || ''}"
-                                    class="form-control suggestion-box__input"
+                                <converse-autocomplete name="jid" .getAutoCompleteList="${getServerList}"
                                     placeholder="${i18n_contact_placeholder}"/>
                                 <span class="suggestion-box__additions visually-hidden" role="status" aria-live="assertive" aria-relevant="additions"></span>
                             </div>
@@ -46,7 +45,7 @@ export default (el) => {
 
                         <div class="form-group add-xmpp-contact__group">
                             <label class="clearfix" for="name">${i18n_group}:</label>
-                            <converse-autocomplete .getAutoCompleteList="${() => el.getGroupsAutoCompleteList()}" name="group"/>
+                            <!--<converse-autocomplete .getAutoCompleteList="${() => el.getGroupsAutoCompleteList()}" name="group"/>-->
                         </div>
 
                         <div class="form-group"><div class="invalid-feedback">${i18n_error_message}</div></div>

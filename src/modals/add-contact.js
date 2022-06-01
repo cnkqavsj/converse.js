@@ -23,11 +23,6 @@ const AddContactModal = BootstrapModal.extend({
     },
 
     afterRender () {
-        if (typeof api.settings.get('xhr_user_search_url') === 'string') {
-            this.initXHRAutoComplete();
-        } else {
-            this.initJIDAutoComplete();
-        }
         const jid_input = this.el.querySelector('input[name="jid"]');
         this.el.addEventListener('shown.bs.modal', () => jid_input.focus(), false);
     },

@@ -10,6 +10,7 @@ export default class AutoCompleteComponent extends CustomElement {
             'autofocus': { type: Boolean },
             'getAutoCompleteList': { type: Function },
             'auto_evaluate': { type: Boolean },
+            'dataMap': { type: Function },
             'auto_first': { type: Boolean }, // Should the first element be automatically selected?
             'filter': { type: String },
             'include_triggers': { type: String },
@@ -25,6 +26,7 @@ export default class AutoCompleteComponent extends CustomElement {
         this.auto_evaluate = true; // Should evaluation happen automatically without any particular key as trigger?
         this.auto_first = false; // Should the first element be automatically selected?
         this.filter = 'contains';
+        this.dataMap = a => a; // Function that maps user provided input to a suggestion value
         this.include_triggers = ''; // Space separated chars which should be included in the returned value
         this.match_current_word = false; // Match only the current word, otherwise all input is matched
         this.max_items = 10;
@@ -64,6 +66,7 @@ export default class AutoCompleteComponent extends CustomElement {
             'filter': this.filter == 'contains' ? FILTER_CONTAINS : FILTER_STARTSWITH,
             'include_triggers': [],
             'list': () => this.getAutoCompleteList(),
+            'data': (a) => this.dataMap(a),
             'match_current_word': true,
             'max_items': this.max_items,
             'min_chars': this.min_chars
